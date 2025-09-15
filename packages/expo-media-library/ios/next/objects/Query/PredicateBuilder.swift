@@ -2,9 +2,9 @@ import Photos
 import ExpoModulesCore
 
 class AssetFieldPredicateBuilder {
-  static func buildPredicate(assetField: AssetField, value: Int, symbol: String) -> NSPredicate {
+  static func buildPredicate(assetField: AssetField, value: Int64, symbol: String) -> NSPredicate {
     if assetField == .CREATION_TIME || assetField == .MODIFICATION_TIME {
-      let date = Date(timeIntervalSince1970: TimeInterval(value))
+      let date = Date(milliseconds: value)
       return NSPredicate(format: "\(assetField.photosKey()) \(symbol) %@", argumentArray: [date])
     }
     return NSPredicate(format: "\(assetField.photosKey()) \(symbol) %@", argumentArray: [value])
@@ -15,7 +15,7 @@ class AssetFieldPredicateBuilder {
     return NSPredicate(format: "\(assetField.photosKey()) \(symbol) %@", argumentArray: [nsValue])
   }
 
-  static func buildPredicate(assetField: AssetField, values: [Int], symbol: String) -> NSPredicate {
+  static func buildPredicate(assetField: AssetField, values: [Int64], symbol: String) -> NSPredicate {
     if assetField == .CREATION_TIME || assetField == .MODIFICATION_TIME {
       let dates = values.map { Date(timeIntervalSince1970: TimeInterval($0)) }
       return NSPredicate(format: "\(assetField.photosKey()) \(symbol) %@", argumentArray: [dates])
@@ -28,8 +28,8 @@ class AssetFieldPredicateBuilder {
     return NSPredicate(format: "\(assetField.photosKey()) \(symbol) %@", argumentArray: [nsValues])
   }
 
-  static func buildPredicate(assetField: AssetField, value: Either<MediaTypeNext, Int>, symbol: String) throws -> NSPredicate {
-    if let intVal = try? value.as(Int.self) {
+  static func buildPredicate(assetField: AssetField, value: Either<MediaTypeNext, Int64>, symbol: String) throws -> NSPredicate {
+    if let intVal = try? value.as(Int64.self) {
       return buildPredicate(assetField: assetField, value: intVal, symbol: symbol)
     }
     if let mediaVal = try? value.as(MediaTypeNext.self) {
@@ -38,8 +38,8 @@ class AssetFieldPredicateBuilder {
     throw PredicateBuilderException("Unsupported Either type for \(assetField)")
   }
 
-  static func buildPredicate(assetField: AssetField, values: Either<[MediaTypeNext], [Int]>, symbol: String) throws -> NSPredicate {
-    if let intValues = try? values.as([Int].self) {
+  static func buildPredicate(assetField: AssetField, values: Either<[MediaTypeNext], [Int64]>, symbol: String) throws -> NSPredicate {
+    if let intValues = try? values.as([Int64].self) {
       return buildPredicate(assetField: assetField, values: intValues, symbol: symbol)
     }
     if let mediaValues = try? values.as([MediaTypeNext].self) {

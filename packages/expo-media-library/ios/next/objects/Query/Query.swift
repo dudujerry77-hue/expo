@@ -8,7 +8,7 @@ class Query: SharedObject {
   private var limit: Int?
   private var offset: Int?
 
-  func eq(_ assetField: AssetField, _ value: Either<MediaTypeNext, Int>) throws -> Query {
+  func eq(_ assetField: AssetField, _ value: Either<MediaTypeNext, Int64>) throws -> Query {
     let predicate = try AssetFieldPredicateBuilder.buildPredicate(
       assetField: assetField,
       value: value,
@@ -18,7 +18,7 @@ class Query: SharedObject {
     return self
   }
 
-  func within(_ assetField: AssetField, _ values: Either<[MediaTypeNext], [Int]>) throws -> Query {
+  func within(_ assetField: AssetField, _ values: Either<[MediaTypeNext], [Int64]>) throws -> Query {
     let predicate = try AssetFieldPredicateBuilder.buildPredicate(
       assetField: assetField,
       values: values,
@@ -28,7 +28,7 @@ class Query: SharedObject {
     return self
   }
 
-  func gt(_ assetField: AssetField, _ value: Int) -> Query {
+  func gt(_ assetField: AssetField, _ value: Int64) -> Query {
     let predicate = AssetFieldPredicateBuilder.buildPredicate(
       assetField: assetField,
       value: value,
@@ -38,7 +38,7 @@ class Query: SharedObject {
     return self
   }
 
-  func gte(_ assetField: AssetField, _ value: Int) -> Query {
+  func gte(_ assetField: AssetField, _ value: Int64) -> Query {
     let predicate = AssetFieldPredicateBuilder.buildPredicate(
       assetField: assetField,
       value: value,
@@ -48,7 +48,7 @@ class Query: SharedObject {
     return self
   }
 
-  func lt(_ assetField: AssetField, _ value: Int) -> Query {
+  func lt(_ assetField: AssetField, _ value: Int64) -> Query {
     let predicate = AssetFieldPredicateBuilder.buildPredicate(
       assetField: assetField,
       value: value,
@@ -58,7 +58,7 @@ class Query: SharedObject {
     return self
   }
 
-  func lte(_ assetField: AssetField, _ value: Int) -> Query {
+  func lte(_ assetField: AssetField, _ value: Int64) -> Query {
     let predicate = AssetFieldPredicateBuilder.buildPredicate(
       assetField: assetField,
       value: value,

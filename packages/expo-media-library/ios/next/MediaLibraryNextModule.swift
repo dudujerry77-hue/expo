@@ -57,27 +57,27 @@ public final class MediaLibraryNextModule: Module {
         return Query()
       }
 
-      Function("eq") { (this: Query, assetField: AssetField, value: Either<MediaTypeNext, Int>) in
+      Function("eq") { (this: Query, assetField: AssetField, value: Either<MediaTypeNext, Int64>) in
         try this.eq(assetField, value)
       }
 
-      Function("within") { (this: Query, assetField: AssetField, values: Either<[MediaTypeNext], [Int]>) in
+      Function("within") { (this: Query, assetField: AssetField, values: Either<[MediaTypeNext], [Int64]>) in
         try this.within(assetField, values)
       }
 
-      Function("gt") { (this: Query, assetField: AssetField, value: Int) in
+      Function("gt") { (this: Query, assetField: AssetField, value: Int64) in
         this.gt(assetField, value)
       }
 
-      Function("gte") { (this: Query, assetField: AssetField, value: Int) in
+      Function("gte") { (this: Query, assetField: AssetField, value: Int64) in
         this.gte(assetField, value)
       }
 
-      Function("lt") { (this: Query, assetField: AssetField, value: Int) in
+      Function("lt") { (this: Query, assetField: AssetField, value: Int64) in
         this.lt(assetField, value)
       }
 
-      Function("lte") { (this: Query, assetField: AssetField, value: Int) in
+      Function("lte") { (this: Query, assetField: AssetField, value: Int64) in
         this.lte(assetField, value)
       }
 
@@ -134,13 +134,13 @@ public final class MediaLibraryNextModule: Module {
       }
     }
 
-    AsyncFunction("deleteManyAlbums") { (albums: [Album], deleteAssets: Bool) async throws in
+    AsyncFunction("deleteAlbums") { (albums: [Album], deleteAssets: Bool) async throws in
       try await checkIfPermissionGranted()
       let albumsIds = albums.map { $0.id }
       try await AssetCollectionRepository.shared.delete(by: albumsIds, deleteAssets: deleteAssets)
     }
 
-    AsyncFunction("deleteManyAssets") { (assets: [Asset]) async throws in
+    AsyncFunction("deleteAssets") { (assets: [Asset]) async throws in
       try await checkIfPermissionGranted()
       let assetIds = assets.map { $0.id }
       try await AssetRepository.shared.delete(by: assetIds)

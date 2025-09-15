@@ -34,20 +34,20 @@ class Asset: SharedObject {
     return filename
   }
 
-  func getCreationTime() async throws -> Int? {
+  func getCreationTime() async throws -> Int64? {
     let phAsset = try await requirePHAsset()
     guard let date = phAsset.creationDate else {
       return nil
     }
-    return Int(date.timeIntervalSince1970)
+    return date.millisecondsSince1970
   }
 
-  func getModificationTime() async throws -> Int? {
+  func getModificationTime() async throws -> Int64? {
     let phAsset = try await requirePHAsset()
     guard let date = phAsset.modificationDate else {
       return nil
     }
-    return Int(date.timeIntervalSince1970)
+    return date.millisecondsSince1970
   }
 
   func getMediaType() async throws -> MediaTypeNext {

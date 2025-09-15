@@ -270,8 +270,9 @@ export async function test(t) {
       t.expect(mediaType).toBeDefined();
     });
 
-    t.it('returns positive modification time', async () => {
+    t.it('returns correct modification time', async () => {
       const modificationTime = await asset.getModificationTime();
+      t.expect(new Date(modificationTime).getFullYear()).toBeGreaterThan(1970);
       t.expect(modificationTime).toBeGreaterThan(0);
     });
 
@@ -319,8 +320,9 @@ export async function test(t) {
       t.expect(mediaType).toBeDefined();
     });
 
-    t.it('returns positive modification time', async () => {
+    t.it('returns correct modification time', async () => {
       const modificationTime = await videoAsset.getModificationTime();
+      t.expect(new Date(modificationTime).getFullYear()).toBeGreaterThan(1970);
       t.expect(modificationTime).toBeGreaterThan(0);
     });
 
@@ -440,8 +442,8 @@ export async function test(t) {
       const [queriedAsset] = await new Query()
         .limit(1)
         .album(album)
-        .gte(AssetField.MODIFICATION_TIME, (await asset.getModificationTime()) - 1)
-        .lte(AssetField.MODIFICATION_TIME, (await asset.getModificationTime()) + 1)
+        .gte(AssetField.MODIFICATION_TIME, (await asset.getModificationTime()) - 1000)
+        .lte(AssetField.MODIFICATION_TIME, (await asset.getModificationTime()) + 1000)
         .exe();
       // then
       t.expect(queriedAsset.id).toBe(asset.id);
@@ -477,8 +479,8 @@ export async function test(t) {
       const [queriedAsset] = await new Query()
         .limit(1)
         .album(album)
-        .gte(AssetField.MODIFICATION_TIME, (await asset.getModificationTime()) + 1)
-        .lte(AssetField.MODIFICATION_TIME, (await asset.getModificationTime()) - 1)
+        .gte(AssetField.MODIFICATION_TIME, (await asset.getModificationTime()) + 1000)
+        .lte(AssetField.MODIFICATION_TIME, (await asset.getModificationTime()) - 1000)
         .exe();
       // then
       t.expect(queriedAsset).toBeUndefined();
